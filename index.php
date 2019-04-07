@@ -10,6 +10,7 @@ Name: <input type="text" name="name">
 <input type="submit">
 </form><br><br><br>
 
+
 <?php 
 $filename = 'friends.txt';
 
@@ -29,7 +30,11 @@ echo "</ol>";
 rewind($file);
 ?>
 
-<form action='index.php' method='post'>Filter: <input type='text' name='nameFilter' value="<?=$nameFilter?>"><input type='submit'></form><br>
+<form action='index.php' method='post'>
+Filter: <input type='text' name='nameFilter' value="<?=$nameFilter?>">
+<input type="checkbox" name="startingWith" <?php if ($startingWith=='TRUE') echo "checked"?> value="TRUE">only names starting whit
+<input type='submit'>
+</form><br><br>
 
 <?php
 if (isset($_POST["nameFilter"])){
@@ -38,9 +43,11 @@ if (isset($_POST["nameFilter"])){
     while (!feof($file)) {
         $file2=fgets($file);
         $RESULT=stristr($file2,$_POST["nameFilter"]);
-        if ($RESULT==$file2){
+        if (($RESULT==$file2)) {
             array_push($tab,$RESULT);
+           
         }
+        
     } 
     echo "<ol>";
     foreach($tab as $friend){
@@ -55,7 +62,6 @@ fclose($file);
 
 <br><br>
 
-
-<h1 style='text-align: center;' >  Footer </h1> 
+<h1 style='text-align: center;' > Footer </h1> 
 </body>
 </html>
